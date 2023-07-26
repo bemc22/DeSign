@@ -1,0 +1,15 @@
+60000 imágenes
+
+1. Para cada canal
+	2. Para cada imagen
+		3. Kernel 3x3 random binario
+		4. Binarizar imagen con threshold 0.5
+		5. Filtrado de imagen
+		6. Eliminación de parte negativa
+		7. Codificación de ventana: Con la convolución las imágenes 32x32 pasan a ser 30x30
+		8. Para un threshold 2x2 surgen 15 ventanas.
+	           Para un threshold 3x3 surgen 10 ventanas.
+		9. Codificar cada ventana y guardarla si no es de ceros
+		10. Hallar la más repetida.
+				
+			
