@@ -1,5 +1,6 @@
 function quantized = apply_halfwave(x)
 %Applies halfwave to integer threshold matrix
+%Prueba
 quantized = zeros(size(x));
 for k = 1:size(x, 3)
     for i=1:size(x, 1)
