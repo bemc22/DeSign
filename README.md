@@ -1,2 +1,2 @@
-# DeSign: Designed Spatial Periodic Shifted Sign Activation for Binary Neural Networks
+# DeSign
 Code will be available soon
