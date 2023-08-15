@@ -12,3 +12,4 @@
 | Library        | Link |
 | -----------   | ----------- |
 | Tensorflow    | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bemc22/DeSign/blob/main/BNN/notebooks/demo_activation.ipynb)       |
+| Pytorch    | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bemc22/DeSign/blob/main/ReCU/notebooks/demo_activation.ipynb)       |
