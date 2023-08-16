@@ -1,37 +1,50 @@
 clear all; close all; clc;
 addpath(genpath('../Utils'))
-addpath(genpath('../Utils'))
-% metrics = ['corr', 'mse', 'psnr_fun', 'tv', 'wpsnr'];
-% Calcular todas las métricas a la vez. Configurar.
-metric = 'tv';
+addpath(genpath('Metrics'))
+addpath(genpath('../Data'))
 
-metric_fun = choose_metric(metric);
+total_images = 20;
+
+% Establecer semilla
+rng(6)
 
 % Crea todos los thresholds posibles con esa dimension
 threshold_size = 2; % 2, 3
 thresholds = create_thresholds(threshold_size^2);
 
-% Carga CIFAR100
-CIFAR100 = load_cifar100();
-height = size(CIFAR100, 2);
-width = size(CIFAR100, 3);
-
 % Means
-metric_means = zeros(1, size(thresholds, 3));
+metric_means = zeros(5, size(thresholds, 3));
 
 % Crea el kernel para simular las convolucionales
-% Establecer semilla
 MyKernel = random_binary_matrix(3,3);
+
+%Decidir si usar padding o no
+use_padding = 0;
+
+%Tipo de padding a usar en convolución binario:
+% ['symmetric', 'circular', 'replicate']
+padding = 'symmetric';
+
+% Carga CIFAR100
+CIFAR100 = load_cifar100();
+height = size(CIFAR100, 2)-2*not(use_padding);
+width = size(CIFAR100, 3)-2*not(use_padding);
 
 % Itera sobre todos los thresholds posibles
 for i=1:size(thresholds, 3)
+    i
     
-    metric_value = 0;
+    corr_value = 0;
+    mse_value = 0;
+    psnr_value = 0;
+    tv_value = 0;
+    wpsnr_value = 0;
+    
     
     %Elección de threshold
     threshold = thresholds(:,:,i);
     
-    for j=1:size(CIFAR100, 1)
+    for j=1:total_images
         
         % Carga de imagen individual
         input = rot90(rgb2gray(squeeze(CIFAR100(j,:,:,:))),-1);
@@ -40,41 +53,64 @@ for i=1:size(thresholds, 3)
         binary_input = binarize(input, 0.5);
         
         % Simulación de convolución binaria
-        % Probar con diferentes tipos de padding
-        binary_input = padarray(binary_input, [1 1], 'symmetric');
+        if use_padding
+            binary_input = padarray(binary_input, [1 1], padding);
+        else
+            input = input(2:end-1,2:end-1);
+        end
+        
         SalWI       = conv2(binary_input, MyKernel, 'valid'); %%Filtering
         reluapp     = max(0,SalWI); %%Apply relu
         
         % Aplicación de threshold
         factor_h = height/threshold_size;
         factor_w = width/threshold_size;
-        
+       
         threshold_broadcast = repmat(threshold, factor_h, factor_w);
         proposed = reluapp - threshold_broadcast;
         
-        output = binarize(proposed, 0);
+        % Salida final
+        % Binariza a 0 y 1
+        output = binarize_pos(proposed, 0);
         
         
-        %Calcular métrica elegida
-        if strcmp(metric, 'tv')
-            metric_value = metric_value + metric_fun(output);
-        else
-            metric_value = metric_value + metric_fun(input, output);
-        end
+        % Calculo de métricas
+        % ['corr', 'mse', 'psnr_fun', 'tv', 'wpsnr']
+        corr_value = corr_value + corr(input, output);
+        mse_value = mse_value + mse(input, output);
+        psnr_value = psnr_value + psnr_fun(input, output);
+        tv_value = tv_value + tv(output);
+        wpsnr_value = wpsnr_value + wpsnr(input, output);
         
-        figure(1)
-        subplot(1,2,1)
-        imagesc(input)
-        colormap gray
-        subplot(1,2,2)
-        imagesc(output)
-        colormap gray
-        pause(1)
+        
+%         figure(1)
+%         subplot(1,2,1)
+%         imagesc(input)
+%         colormap gray
+%         subplot(1,2,2)
+%         imagesc(output)
+%         colormap gray
+%         pause(1)
         
     end
     
+    % Almacenamiento de las 5 métricas para cada threshold
     % Mostrar 5 con mejor puntaje y 5 con menor puntaje
-    metric_means(1, i) = metric_value / size(CIFAR100, 1);
+    metric_means(1, i) = corr_value / total_images;
+    metric_means(2, i) = mse_value / total_images;
+    metric_means(3, i) = psnr_value / total_images;
+    metric_means(4, i) = tv_value / total_images;
+    metric_means(5, i) = wpsnr_value / total_images;
     
     
 end
+
+
+
+show_best_and_worst(metric_means, thresholds)
+
+
+
+
+
+
