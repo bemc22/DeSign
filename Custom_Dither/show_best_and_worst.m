@@ -12,10 +12,10 @@ for metric = 1:5
     metric_indv = metrics(metric,:);
     [metric_indv_sorted, I] = sort(metric_indv);
     figure(metric)
-    tcl = tiledlayout(2,5);
+    tcl = tiledlayout(2,10);
     
     %Se muestran los 5 menores
-    for i=1:5
+    for i=1:10
         nexttile()
         imagesc(thresholds(:, :, I(i)))
         colormap(cmap)
@@ -25,7 +25,7 @@ for metric = 1:5
     end
     
     %Se muestran los 5 mayores
-    for i=1:5
+    for i=1:10
         nexttile()
         imagesc(thresholds(:, :, I(end-(i-1))))
         colormap(cmap)
