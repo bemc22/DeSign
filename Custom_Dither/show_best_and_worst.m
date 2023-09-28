@@ -2,7 +2,9 @@ function [] = show_best_and_worst(metrics, thresholds)
 
 metric_names = ["correlation", "mse", "psnr", "total variation", "wpsnr"];
 
-cmap = [0 0 0;0 1 1;0 1 1;0 1 0;0 1 0;0 0 1;0 0 1;1 1 0; 1 1 0; 1 1 1];
+%cmap = [0 0 0;0 1 1;0 1 1;0 1 0;0 1 0;0 0 1;0 0 1;1 1 0; 1 1 0; 1 1 1];
+map = {'#B3D8E5','#85C2D6','#51BDE1','#23A6D1','#2F94C6','#5277B7','#0078E0','#545CF2','#1F1FFF','#000052'};
+cmap = validatecolor(map, 'multiple');
 % threshold_continuous = 0;
 
 %Para cada métrica
@@ -21,6 +23,7 @@ for metric = 1:5
         colormap(cmap)
         caxis([0 9]) 
         title(num2str(metric_indv_sorted(i)))
+        axis off
         
     end
     
@@ -31,6 +34,7 @@ for metric = 1:5
         colormap(cmap)
         caxis([0 9]) 
         title(num2str(metric_indv_sorted(end-(i-1))))
+        axis off
         
     end
     
