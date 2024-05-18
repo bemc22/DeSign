@@ -30,7 +30,7 @@ class Lighting(object):
         self.eigvec = eigvec
 
     def __call__(self, img):
-        if self.alphastd == 0.:
+        if np.isclose(self.alphastd, 0.0, rtol=1e-9):
             return img
         rnd = np.random.randn(3) * self.alphastd
         rnd = rnd.astype('float32')
