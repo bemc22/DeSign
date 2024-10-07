@@ -1,5 +1,5 @@
 # Designed Dithering Sign Activation for Binary Neural Networks
-
+[![DOI:10.1109/JSTSP.2024.3467926](https://zenodo.org/badge/DOI/10.1109/JSTSP.2024.3467926.svg)](https://doi.org/10.1109/JSTSP.2024.3467926)
 [![arXiv](https://img.shields.io/badge/arXiv-2405.02220-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2405.02220)
 
 ## Abstract
@@ -28,12 +28,14 @@ If this code is useful for your and you use it in an academic work, please consi
 
 
 ```bib
-@misc{monroy2024designed,
-      title={Designed Dithering Sign Activation for Binary Neural Networks}, 
-      author={Brayan Monroy and Juan Estupiñan and Tatiana Gelvez-Barrera and Jorge Bacca and Henry Arguello},
-      year={2024},
-      eprint={2405.02220},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{monroy2024design,
+  author={Monroy, Brayan and Estupinan, Juan and Gelvez-Barrera, Tatiana and Bacca, Jorge and Arguello, Henry},
+  journal={IEEE Journal of Selected Topics in Signal Processing}, 
+  title={Designed Dithering Sign Activation for Binary Neural Networks}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-8},
+  doi={10.1109/JSTSP.2024.3467926}
 }
 ```
