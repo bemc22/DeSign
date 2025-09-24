@@ -24,7 +24,7 @@ Binary Neural Networks emerged as a cost-effective and energy-efficient solution
 
 
 ## How to cite
-If this code is useful for your and you use it in an academic work, please consider citing this paper as
+If this code is useful for your research and you use it in an academic work, please consider citing this paper as
 
 
 ```bib
